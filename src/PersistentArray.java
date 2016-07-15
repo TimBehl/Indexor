@@ -21,7 +21,12 @@ public class PersistentArray {
 	}
 	
 	public void set(int index, long value){
-		
+		try{
+			file.seek(BIT_OFFSET*index);
+			file.writeLong(value);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public long get(int index){
