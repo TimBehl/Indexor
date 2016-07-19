@@ -9,7 +9,17 @@ public class PersistentArray {
 	private static final int BIT_OFFSET = 8;
 	
 	public static void initialize(String arrayFileName, int arraySize, long initialValue){
-		
+		try {
+			RandomAccessFile newFile = new RandomAccessFile(arrayFileName, "rw");
+			for(int i = 0; i < arraySize; i++){
+				newFile.writeLong(initialValue);
+			}
+			newFile.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public PersistentArray(String arrayFileName){
@@ -57,6 +67,15 @@ public class PersistentArray {
 	}
 	
 	public static void delete(String arrayFileName){
-		
+		RandomAccessFile delFile;
+		try {
+			delFile = new RandomAccessFile(arrayFileName, "rw");
+			delFile.setLength(0);
+			delFile.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
